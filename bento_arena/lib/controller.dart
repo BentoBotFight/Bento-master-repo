@@ -24,14 +24,18 @@ class _ControllerPageState extends State<ControllerPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             IconButton(
+              iconSize: 100,
               onPressed: () async {
-                await sendRequestToFlaskApp('http://20.98.164.88:3389/run');
+                await sendRequestToFlaskApp(
+                    'https://bento.comfyspace.tech/run');
               },
               icon: Icon(Icons.arrow_upward),
             ),
             IconButton(
+              iconSize: 100,
               onPressed: () async {
-                await sendRequestToFlaskApp('http://20.98.164.88:3389/stop');
+                await sendRequestToFlaskApp(
+                    'https://bento.comfyspace.tech/stop');
               },
               icon: Icon(Icons.arrow_downward),
             ),
