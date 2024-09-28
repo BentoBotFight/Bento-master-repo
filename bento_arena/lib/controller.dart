@@ -1,5 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:gap/gap.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:flutter/foundation.dart';
+import 'package:webview_all/webview_all.dart';
+
+import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
+
+const List<TabItem> items = [
+  TabItem(
+    icon: Icons.home,
+    // title: 'Home',
+  ),
+  TabItem(
+    icon: Icons.search_sharp,
+    title: 'Shop',
+  ),
+  TabItem(
+    icon: Icons.favorite_border,
+    title: 'Wishlist',
+  ),
+  TabItem(
+    icon: Icons.shopping_cart_outlined,
+    title: 'Cart',
+  ),
+  TabItem(
+    icon: Icons.account_box,
+    title: 'profile',
+  ),
+];
 
 class ControllerPage extends StatefulWidget {
   const ControllerPage({super.key});
@@ -31,6 +60,9 @@ class _ControllerPageState extends State<ControllerPage> {
               },
               icon: Icon(Icons.arrow_upward),
             ),
+            Gap(32),
+            //Webview(url: "https://www.wechat.com/en"),
+            Gap(32),
             IconButton(
               iconSize: 100,
               onPressed: () async {
@@ -41,6 +73,12 @@ class _ControllerPageState extends State<ControllerPage> {
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: const BottomBarFloating(
+        items: items,
+        backgroundColor: Colors.white,
+        color: Colors.green,
+        colorSelected: Colors.red,
       ),
     );
   }
