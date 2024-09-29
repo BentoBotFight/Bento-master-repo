@@ -1,33 +1,16 @@
+import 'package:bento_arena/components/button.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:gap/gap.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:flutter/foundation.dart';
-import 'package:webview_all/webview_all.dart';
-
 import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
+import 'package:webview_all/webview_all.dart';
 
 const List<TabItem> items = [
   TabItem(
-    icon: Icons.home,
+    icon: Icons.stop,
     // title: 'Home',
   ),
-  TabItem(
-    icon: Icons.search_sharp,
-    title: 'Shop',
-  ),
-  TabItem(
-    icon: Icons.favorite_border,
-    title: 'Wishlist',
-  ),
-  TabItem(
-    icon: Icons.shopping_cart_outlined,
-    title: 'Cart',
-  ),
-  TabItem(
-    icon: Icons.account_box,
-    title: 'profile',
-  ),
+
 ];
 
 class ControllerPage extends StatefulWidget {
@@ -49,37 +32,59 @@ class _ControllerPageState extends State<ControllerPage> {
     return Scaffold(
       body: Center(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            IconButton(
-              iconSize: 100,
-              onPressed: () async {
-                await sendRequestToFlaskApp(
-                    'https://bento.comfyspace.tech/run');
-              },
-              icon: Icon(Icons.arrow_upward),
-            ),
             Gap(32),
-            //Webview(url: "https://www.wechat.com/en"),
-            Gap(32),
-            IconButton(
-              iconSize: 100,
-              onPressed: () async {
-                await sendRequestToFlaskApp(
-                    'https://bento.comfyspace.tech/stop');
-              },
-              icon: Icon(Icons.arrow_downward),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ActionButton(icon: Icons.arrow_upward_outlined, url: 'https://bento.comfyspace.tech/forward'),
+                Gap(32),
+                ActionButton(icon: Icons.arrow_downward_outlined, url: 'https://bento.comfyspace.tech/backward'),
+              ],
             ),
+
+            Gap(32),
+            Expanded(child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                /*Center(
+                  child: Image.network('https://images.prismic.io/nhrl/Zq0F7kaF0TcGIp8e_SeptemberNHRLspectator.jpg?auto=format,compress'),
+                ),*/
+                Expanded(child: Webview(url: "https://viewer.millicast.com/?streamId=W3yfVd/myStreamName")),
+
+                ActionButton(icon: Icons.stop, url: 'https://bento.comfyspace.tech/stop')
+              ],
+            ),),
+
+            Gap(32),
+            Row(
+              children: [
+                ActionButton(icon: Icons.keyboard_arrow_left_outlined, url: 'https://bento.comfyspace.tech/left'),
+                Gap(32),
+                ActionButton(icon: Icons.keyboard_arrow_right_outlined, url: 'https://bento.comfyspace.tech/right'),
+
+              ],
+            ),
+            Gap(32)
+
           ],
         ),
       ),
-      bottomNavigationBar: const BottomBarFloating(
+      /*bottomNavigationBar: BottomBarFloating(
         items: items,
         backgroundColor: Colors.white,
         color: Colors.green,
         colorSelected: Colors.red,
-      ),
+        onTap: (num){
+          print(num);
+          if(num == 0){
+            sendCurlRequest('https://bento.comfyspace.tech/stop');
+          }
+      }
+      ),*/
     );
   }
 }

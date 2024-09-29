@@ -1,10 +1,7 @@
 import 'package:bento_arena/controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+void main(){
+  //WidgetsFlutterBinding.ensureInitialized();
 
   runApp(const MyApp());
 }
