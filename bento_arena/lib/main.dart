@@ -1,4 +1,8 @@
 import 'package:bento_arena/controller.dart';
+import 'package:bento_arena/onboarding/onboarding.dart';
+import 'package:bento_arena/theme/color.dart';
+import 'package:bento_arena/theme/typography.dart';
+import 'package:bento_arena/welcome.dart';
 import 'package:flutter/material.dart';
 void main(){
   //WidgetsFlutterBinding.ensureInitialized();
@@ -13,12 +17,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Bento Arena',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.comfyGreen),
         useMaterial3: true,
+        textTheme: ComfyTextTheme,
       ),
-      home: ControllerPage(),
+        darkTheme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.comfyGreen),
+          useMaterial3: true,
+          textTheme: ComfyTextTheme,
+        ),
+      home: HiThere()
+      //ControllerPage(),
     );
   }
 }
+
+
+

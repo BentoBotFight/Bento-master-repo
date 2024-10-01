@@ -1,12 +1,23 @@
+import 'package:bento_arena/theme/color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 import '../controller.dart';
 
 class ActionButton extends StatefulWidget {
-  const ActionButton({super.key, required this.icon, required this.url});
-  final IconData icon;
+  const ActionButton({super.key,
+    //required this.icon,
+    required this.url,
+    required this.svg,
+    this.height = 50,
+    this.width = 50,
+  });
+  //final IconData icon;
   final String url;
+  final String svg;
+  final double height;
+  final double width;
 
   @override
   State<ActionButton> createState() => _ActionButtonState();
@@ -17,43 +28,58 @@ class _ActionButtonState extends State<ActionButton> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapDown: (_) {
-        setState(() {
-          _isPressed = true;
-        });
-      },
-      onTapUp: (_) {
-        setState(() {
-          _isPressed = false;
-        });
-      },
-      onTapCancel: () {
-        setState(() {
-          _isPressed = false;
-        });
-      },
-      onTap: () async {
-        await sendRequestToFlaskApp(widget.url);
-      },
-      child: Container(
-        padding: EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: _isPressed ? Colors.red : Colors.blue,
-          borderRadius: BorderRadius.circular(20), // Adds rounded corners
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              spreadRadius: 1,
-              blurRadius: 3,
-              offset: Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Icon(
-          widget.icon,
-          size: 40,
-          color: _isPressed ? Colors.yellow : Colors.white,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+
+        onTapDown: (_) async{
+          print('tap holding');
+          await sendRequestToFlaskApp(widget.url);
+          setState(() {
+            _isPressed = true;
+          });
+        },
+        onTapUp: (_) async{
+          print('tap stopping');
+          await sendRequestToFlaskApp('https://bento.comfyspace.tech/stop');
+          setState(() {
+            _isPressed = false;
+          });
+        },
+        onTapCancel: () async {
+          print('cancel');
+          //await sendRequestToFlaskApp('https://bento.comfyspace.tech/stop');
+          setState(() {
+            _isPressed = false;
+          });
+        },
+
+        child: Container(
+          padding: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: _isPressed ? Colors.red : AppColors.comfyGreenText,
+            borderRadius: BorderRadius.circular(20), // Adds rounded corners
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                spreadRadius: 1,
+                blurRadius: 3,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: SvgPicture.asset(
+            color: AppColors.lighterGreen,
+            //colorFilter: ColorFilter.mode(AppColors.lighterGreen, BlendMode.color),
+            width: widget.width, height: widget.height,
+              widget.svg,
+              semanticsLabel: 'Navigation Button'
+          )
+          /*Icon(
+            widget.icon,
+            size: 40,
+            color: _isPressed ? Colors.yellow : Colors.white,
+          ),*/
         ),
       ),
     );

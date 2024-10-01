@@ -1,9 +1,13 @@
 import 'package:bento_arena/components/button.dart';
+import 'package:bento_arena/components/control_section.dart';
+import 'package:bento_arena/theme/color.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:gap/gap.dart';
 import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
 import 'package:webview_all/webview_all.dart';
+
+import 'components/live_stream.dart';
 
 const List<TabItem> items = [
   TabItem(
@@ -29,7 +33,32 @@ class _ControllerPageState extends State<ControllerPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
+      backgroundColor: AppColors.lighterGreen,
+      body: OrientationBuilder(builder: (context, orientation){
+        return orientation == Orientation.landscape
+            ? const Row(
+          children: [
+            LiveStream(),
+            Gap(64),
+            ControlSection(),
+            Gap(64),
+          ],
+        )
+            : const Column(
+          children: [
+            LiveStream(),
+            Gap(64),
+            ControlSection(),
+            Gap(64),
+          ],
+        );
+
+      }),
+    );
+
+    /*return Scaffold(
       body: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -53,8 +82,7 @@ class _ControllerPageState extends State<ControllerPage> {
                 /*Center(
                   child: Image.network('https://images.prismic.io/nhrl/Zq0F7kaF0TcGIp8e_SeptemberNHRLspectator.jpg?auto=format,compress'),
                 ),*/
-                Expanded(child: Webview(url: "https://viewer.millicast.com/?streamId=W3yfVd/myStreamName")),
-
+                LiveStream(),
                 ActionButton(icon: Icons.stop, url: 'https://bento.comfyspace.tech/stop')
               ],
             ),),
@@ -73,19 +101,7 @@ class _ControllerPageState extends State<ControllerPage> {
           ],
         ),
       ),
-      /*bottomNavigationBar: BottomBarFloating(
-        items: items,
-        backgroundColor: Colors.white,
-        color: Colors.green,
-        colorSelected: Colors.red,
-        onTap: (num){
-          print(num);
-          if(num == 0){
-            sendCurlRequest('https://bento.comfyspace.tech/stop');
-          }
-      }
-      ),*/
-    );
+    )*/
   }
 }
 
