@@ -46,6 +46,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '290068007404',
     projectId: 'comfyspace-73966',
     authDomain: 'comfyspace-73966.firebaseapp.com',
+    databaseURL: 'https://comfyspace-73966-default-rtdb.firebaseio.com',
     storageBucket: 'comfyspace-73966.appspot.com',
     measurementId: 'G-2K0LXM2NRK',
   );
@@ -55,6 +56,7 @@ class DefaultFirebaseOptions {
     appId: '1:290068007404:android:81f97e93a31dc18c3cd8c9',
     messagingSenderId: '290068007404',
     projectId: 'comfyspace-73966',
+    databaseURL: 'https://comfyspace-73966-default-rtdb.firebaseio.com',
     storageBucket: 'comfyspace-73966.appspot.com',
   );
 
@@ -63,6 +65,7 @@ class DefaultFirebaseOptions {
     appId: '1:290068007404:ios:5cc79d18f5c2a18f3cd8c9',
     messagingSenderId: '290068007404',
     projectId: 'comfyspace-73966',
+    databaseURL: 'https://comfyspace-73966-default-rtdb.firebaseio.com',
     storageBucket: 'comfyspace-73966.appspot.com',
     androidClientId: '290068007404-2p7fbvc66okoni2cvjnfnk57r3up8hdq.apps.googleusercontent.com',
     iosClientId: '290068007404-dddaof6j3r7br0340br9sft0gm7famvr.apps.googleusercontent.com',
@@ -74,6 +77,7 @@ class DefaultFirebaseOptions {
     appId: '1:290068007404:ios:5cc79d18f5c2a18f3cd8c9',
     messagingSenderId: '290068007404',
     projectId: 'comfyspace-73966',
+    databaseURL: 'https://comfyspace-73966-default-rtdb.firebaseio.com',
     storageBucket: 'comfyspace-73966.appspot.com',
     androidClientId: '290068007404-2p7fbvc66okoni2cvjnfnk57r3up8hdq.apps.googleusercontent.com',
     iosClientId: '290068007404-dddaof6j3r7br0340br9sft0gm7famvr.apps.googleusercontent.com',
@@ -86,7 +90,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '290068007404',
     projectId: 'comfyspace-73966',
     authDomain: 'comfyspace-73966.firebaseapp.com',
+    databaseURL: 'https://comfyspace-73966-default-rtdb.firebaseio.com',
     storageBucket: 'comfyspace-73966.appspot.com',
     measurementId: 'G-GPMTL08R27',
   );
+
 }

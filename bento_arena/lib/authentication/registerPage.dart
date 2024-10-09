@@ -237,40 +237,37 @@ class _purpose_hereState extends State<purpose_here> {
                         ),
                   ),
                   const Gap(16),
-                  IgnorePointer(
-                    ignoring: true,
-                    child: Container(
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          double cardWidth = 150; // Minimum width of each card
-                          int crossAxisCount = (constraints.maxWidth / cardWidth).floor();
-                          crossAxisCount = crossAxisCount.clamp(2, 4); // Ensure at least 2 and at most 4 cards per row
+                  Container(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        double cardWidth = 150; // Minimum width of each card
+                        int crossAxisCount = (constraints.maxWidth / cardWidth).floor();
+                        crossAxisCount = crossAxisCount.clamp(2, 4); // Ensure at least 2 and at most 4 cards per row
 
-                          return GridView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: crossAxisCount,
-                              childAspectRatio: 1, // Adjust this for card height
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
-                            ),
-                            itemCount: 4, // Total number of cards
-                            itemBuilder: (context, index) {
-                              return option_block(
-                                message: purpose_cards[index]['message'],
-                                icon: purpose_cards[index]['icon'],
-                                onTap: () {
-                                  purpose[purpose_cards[index]['message']] =
-                                  !purpose[
-                                  purpose_cards[index]['message']]!;
-                                },
-                                color: purpose_cards[index]['color']
-                              );
-                            },
-                          );
-                        },
-                      ),
+                        return GridView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: crossAxisCount,
+                            childAspectRatio: 1, // Adjust this for card height
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                          ),
+                          itemCount: 4, // Total number of cards
+                          itemBuilder: (context, index) {
+                            return option_block(
+                              message: purpose_cards[index]['message'],
+                              icon: purpose_cards[index]['icon'],
+                              onTap: () {
+                                purpose[purpose_cards[index]['message']] =
+                                !purpose[
+                                purpose_cards[index]['message']]!;
+                              },
+                              color: purpose_cards[index]['color']
+                            );
+                          },
+                        );
+                      },
                     ),
                   ),
                   /*SizedBox(

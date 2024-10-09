@@ -3,15 +3,21 @@ import 'package:bento_arena/controller.dart';
 import 'package:bento_arena/onboarding/onboarding.dart';
 import 'package:bento_arena/theme/color.dart';
 import 'package:bento_arena/theme/typography.dart';
+import 'package:bento_arena/user_information/bento_queue.dart';
+import 'package:bento_arena/user_information/user_information.dart';
 import 'package:bento_arena/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'dart:html' as html;
+
 Future<void> main() async {
   //WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
+
   );
+
   runApp(const MyApp());
 }
 

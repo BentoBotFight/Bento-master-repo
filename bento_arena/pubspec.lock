@@ -193,6 +193,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.18.1"
+  firebase_database:
+    dependency: "direct main"
+    description:
+      name: firebase_database
+      sha256: "64f8076912139e83f3db3d853df5bffd4c6150a71ffef393584318efd4883f7c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "11.1.4"
+  firebase_database_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_database_platform_interface
+      sha256: "750e9076a41bc78ce87b95f9d0548f224e5b0679009f6236bf5cf98884db60dd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.5+44"
+  firebase_database_web:
+    dependency: transitive
+    description:
+      name: firebase_database_web
+      sha256: daf3fbde892ff5f2ea7469eff1ab22b7988fe96b637919fdec6890141eb51023
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.6+2"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -248,6 +272,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_window_close:
+    dependency: "direct main"
+    description:
+      name: flutter_window_close
+      sha256: bbdd1ec57259cbffc3f978c1709a3314a0991f042490d9d0a02c5fd70ac8dff6
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   gap:
     dependency: "direct main"
     description:
@@ -504,6 +536,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.2"
+  shimmer:
+    dependency: "direct main"
+    description:
+      name: shimmer
+      sha256: "5f88c883a22e9f9f299e5ba0e4f7e6054857224976a5d9f839d4ebdc94a14ac9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   sign_in_with_apple:
     dependency: "direct main"
     description:
@@ -581,6 +621,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.2"
+  timeago:
+    dependency: transitive
+    description:
+      name: timeago
+      sha256: "054cedf68706bb142839ba0ae6b135f6b68039f0b8301cbe8784ae653d5ff8de"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.7.0"
+  timeago_flutter:
+    dependency: "direct main"
+    description:
+      name: timeago_flutter
+      sha256: "0fd70e79f35f5ea6507f04b3852ba3df3de595901cc1a916e4abc452115b09ac"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.7.0"
   typed_data:
     dependency: transitive
     description:

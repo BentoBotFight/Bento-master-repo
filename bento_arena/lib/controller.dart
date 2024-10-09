@@ -1,12 +1,18 @@
 import 'package:bento_arena/components/button.dart';
 import 'package:bento_arena/components/control_section.dart';
+import 'package:bento_arena/presence/presence.dart';
 import 'package:bento_arena/theme/color.dart';
+import 'package:bento_arena/user_information/bento_queue.dart';
+import 'package:bento_arena/user_information/user_information.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_window_close/flutter_window_close.dart';
 import 'package:http/http.dart' as http;
 import 'package:gap/gap.dart';
 import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
 import 'package:webview_all/webview_all.dart';
-
+import 'dart:html' as html;
 import 'components/live_stream.dart';
 
 const List<TabItem> items = [
@@ -24,16 +30,26 @@ class ControllerPage extends StatefulWidget {
   State<ControllerPage> createState() => _ControllerPageState();
 }
 
-class _ControllerPageState extends State<ControllerPage> {
+class _ControllerPageState extends State<ControllerPage> with WidgetsBindingObserver{
+  late user_information user;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    // track if paused or resumed etc..
+    WidgetsBinding.instance.addObserver(this);
+    String? uid = FirebaseAuth.instance.currentUser?.uid;
+    PresenceService().updatePresence();
   }
 
+  Future<void> queue_on() async{
+    final user = await get_user_information();
+    await queue_bento_player(true, 1111, user);
+  }
+  Future<void> queue_off() async{
+    await queue_bento_player(false, 1111, user);
+  }
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: AppColors.lighterGreen,
       body: OrientationBuilder(builder: (context, orientation){
