@@ -1,0 +1,39 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /bento_projects/{document=**} {
+      allow read;
+    }
+    match /mail/{document=**} {
+      allow read, write, create;
+    }
+    match /beginner_project/{document=**} {
+      allow read, write, create;
+    }
+    match /lessons/{document=**} {
+      allow read, write, create;
+    }
+    match /user_information/{userId} {
+      allow create: if true;
+    }
+    match /user_information/{document=**} {
+      allow read, write, create:
+        if request.auth != null && 
+        (request.auth.uid == resource.id || request.auth.token.email == resource.id);
+      
+      match /projects/{projectID} {
+        allow read, write, create;
+        match /buttonList/{buttonID} {
+          allow read, write, create;
+        }
+      }
+    }
+    
+    // Special rule for community@comfyspace.tech
+    match /user_information/community@comfyspace.tech {
+      allow read: if true;
+      allow write, create, delete: if request.auth != null && request.auth.token.email == "community@comfyspace.tech";
+    }
+  }
+}

@@ -1,12 +1,17 @@
+import 'package:bento_arena/authentication/auth.dart';
 import 'package:bento_arena/controller.dart';
 import 'package:bento_arena/onboarding/onboarding.dart';
 import 'package:bento_arena/theme/color.dart';
 import 'package:bento_arena/theme/typography.dart';
 import 'package:bento_arena/welcome.dart';
 import 'package:flutter/material.dart';
-void main(){
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+Future<void> main() async {
   //WidgetsFlutterBinding.ensureInitialized();
-
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -29,7 +34,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           textTheme: ComfyTextTheme,
         ),
-      home: HiThere()
+      home: auth_page()
       //ControllerPage(),
     );
   }
