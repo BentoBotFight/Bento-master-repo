@@ -1,8 +1,9 @@
-import 'package:bento_arena/presence/presence.dart.v1';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../presence/presence.dart';
 import '../auth.dart';
 import 'auth_button.dart';
 
@@ -21,7 +22,7 @@ class _signout_buttonState extends State<signout_button> {
       return const Center(child: CircularProgressIndicator(),);
     });
     // remove presence from realtime database
-    PresenceService().disconnect(signout: true);
+    //PresenceService().disconnect(signout: true);
 
     // check if currently google sign in
       if (await GoogleSignIn().isSignedIn()){
