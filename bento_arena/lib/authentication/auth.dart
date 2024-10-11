@@ -1,4 +1,5 @@
 import 'package:bento_arena/controller.dart';
+import 'package:bento_arena/stream/stream_reroute.dart';
 import 'package:bento_arena/user_information/bento_queue.dart';
 import 'package:bento_arena/user_information/user_information.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -38,7 +39,8 @@ class _auth_pageState extends State<auth_page> {
         builder: (context, snapshot){
           //if user is logged in -> home screen
           if(snapshot.hasData){
-            return const ControllerPage();
+            return const StreamReroute();
+            //ControllerPage();
           }
           /*else if(welcomePage == true && snapshot.hasData == false){
             return overall_summary_screen();

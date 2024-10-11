@@ -1,0 +1,66 @@
+import 'dart:convert';
+
+import 'package:bento_arena/admin/function/user_management.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
+
+import '../theme/color.dart';
+
+FirebaseDatabase database = FirebaseDatabase.instance;
+DatabaseReference user_presence_status = database.ref('status');
+
+class AdminConsole extends StatefulWidget {
+  const AdminConsole({super.key});
+
+  @override
+  State<AdminConsole> createState() => _AdminConsoleState();
+}
+
+class _AdminConsoleState extends State<AdminConsole> {
+
+  @override
+  void initState() {
+    //display_user();
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: StreamBuilder(
+          stream: user_presence_status.onValue,
+          builder: (context, snapshot){
+            if(snapshot.hasError){
+              return Center(child: Text('error displaying live user ${snapshot.error}'),);
+            }
+            else if(snapshot.hasData){
+              Map<String, dynamic> user_presence_map = Map<String, dynamic>.from(snapshot.data!.snapshot.value as Map);
+              List<String> user_uid = user_presence_map.keys.toList();
+
+              return ListView.builder(
+                itemCount: user_presence_map.length,
+                  padding: EdgeInsets.all(20),
+                  itemBuilder: (context, index){
+                  String uid = user_uid[index];
+                  return Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Container(
+                      color: (user_presence_map[uid]['state'] == 'online')? AppColors.comfyGreen :AppColors.lighterGreen,
+                      padding: const EdgeInsets.all(12),
+                      child: ListTile(
+                        title: ((user_presence_map[uid]['email']) != null)? Text(user_presence_map[uid]['email']) : Text(uid),
+                      ),
+                    ),
+                  );
+                  }
+              );
+              return Center(child: Text('data exists'));
+            }
+            else{
+              return Center(child: Text('there is no data'),);
+            }
+          }
+      ),
+    );
+  }
+}
+

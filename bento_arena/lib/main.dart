@@ -1,3 +1,4 @@
+import 'package:bento_arena/admin/admin_console.dart';
 import 'package:bento_arena/authentication/auth.dart';
 import 'package:bento_arena/controller.dart';
 import 'package:bento_arena/onboarding/onboarding.dart';

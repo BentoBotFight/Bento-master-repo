@@ -1,8 +1,11 @@
+import 'package:bento_arena/admin/admin_console.dart';
 import 'package:bento_arena/components/button.dart';
 import 'package:bento_arena/components/control_section.dart';
 import 'package:bento_arena/presence/presence.dart';
+import 'package:bento_arena/secrets/variables.dart';
 import 'package:bento_arena/theme/color.dart';
 import 'package:bento_arena/user_information/bento_queue.dart';
+import 'package:bento_arena/user_information/userIdentifier.dart';
 import 'package:bento_arena/user_information/user_information.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -41,16 +44,18 @@ class _ControllerPageState extends State<ControllerPage> with WidgetsBindingObse
     PresenceService().updatePresence();
   }
 
-  Future<void> queue_on() async{
-    final user = await get_user_information();
-    await queue_bento_player(true, 1111, user);
-  }
-  Future<void> queue_off() async{
-    await queue_bento_player(false, 1111, user);
-  }
   @override
   Widget build(BuildContext context) {
+    return Builder(builder: (context){
+      String uid = FirebaseAuth.instance.currentUser!.uid;
+      if()
+    });
     return Scaffold(
+      floatingActionButton: (getUserID() == admin_email)?
+      FloatingActionButton(onPressed: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => AdminConsole()));
+      }):
+      Gap(0),
       backgroundColor: AppColors.lighterGreen,
       body: OrientationBuilder(builder: (context, orientation){
         return orientation == Orientation.landscape
@@ -74,50 +79,6 @@ class _ControllerPageState extends State<ControllerPage> with WidgetsBindingObse
       }),
     );
 
-    /*return Scaffold(
-      body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Gap(32),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ActionButton(icon: Icons.arrow_upward_outlined, url: 'https://bento.comfyspace.tech/forward'),
-                Gap(32),
-                ActionButton(icon: Icons.arrow_downward_outlined, url: 'https://bento.comfyspace.tech/backward'),
-              ],
-            ),
-
-            Gap(32),
-            Expanded(child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                /*Center(
-                  child: Image.network('https://images.prismic.io/nhrl/Zq0F7kaF0TcGIp8e_SeptemberNHRLspectator.jpg?auto=format,compress'),
-                ),*/
-                LiveStream(),
-                ActionButton(icon: Icons.stop, url: 'https://bento.comfyspace.tech/stop')
-              ],
-            ),),
-
-            Gap(32),
-            Row(
-              children: [
-                ActionButton(icon: Icons.keyboard_arrow_left_outlined, url: 'https://bento.comfyspace.tech/left'),
-                Gap(32),
-                ActionButton(icon: Icons.keyboard_arrow_right_outlined, url: 'https://bento.comfyspace.tech/right'),
-
-              ],
-            ),
-            Gap(32)
-
-          ],
-        ),
-      ),
-    )*/
   }
 }
 
