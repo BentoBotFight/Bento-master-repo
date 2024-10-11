@@ -47,6 +47,7 @@ class _AdminConsoleState extends State<AdminConsole> {
                       color: (user_presence_map[uid]['state'] == 'online')? AppColors.comfyGreen :AppColors.lighterGreen,
                       padding: const EdgeInsets.all(12),
                       child: ListTile(
+                        leading: ((user_presence_map[uid]['queue']) == true)? Icon(Icons.play_circle, color: AppColors.comfyGreenText,): Icon(Icons.pause, color: AppColors.lightGrey),
                         title: ((user_presence_map[uid]['email']) != null)? Text(user_presence_map[uid]['email']) : Text(uid),
                       ),
                     ),
