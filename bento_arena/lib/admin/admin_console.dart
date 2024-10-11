@@ -43,12 +43,23 @@ class _AdminConsoleState extends State<AdminConsole> {
                   String uid = user_uid[index];
                   return Padding(
                     padding: EdgeInsets.all(8),
-                    child: Container(
-                      color: (user_presence_map[uid]['state'] == 'online')? AppColors.comfyGreen :AppColors.lighterGreen,
-                      padding: const EdgeInsets.all(12),
-                      child: ListTile(
-                        leading: ((user_presence_map[uid]['queue']) == true)? Icon(Icons.play_circle, color: AppColors.comfyGreenText,): Icon(Icons.pause, color: AppColors.lightGrey),
-                        title: ((user_presence_map[uid]['email']) != null)? Text(user_presence_map[uid]['email']) : Text(uid),
+                    child: GestureDetector(
+                      onTap: (){
+                        if((user_presence_map[uid]['queue']) ==true){
+                          database.ref('status/$uid').update({'queue': false});
+                        }
+                        else{
+                          database.ref('status/$uid').update({'queue': true});
+                        }
+
+                      },
+                      child: Container(
+                        color: (user_presence_map[uid]['state'] == 'online')? AppColors.comfyGreen :AppColors.lighterGreen,
+                        padding: const EdgeInsets.all(12),
+                        child: ListTile(
+                          leading: ((user_presence_map[uid]['queue']) == true)? Icon(Icons.play_circle, color: AppColors.comfyGreenText,): Icon(Icons.pause, color: AppColors.lightGrey),
+                          title: ((user_presence_map[uid]['email']) != null)? Text(user_presence_map[uid]['email']) : Text(uid),
+                        ),
                       ),
                     ),
                   );
