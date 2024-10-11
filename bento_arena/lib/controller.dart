@@ -8,6 +8,7 @@ import 'package:bento_arena/user_information/bento_queue.dart';
 import 'package:bento_arena/user_information/userIdentifier.dart';
 import 'package:bento_arena/user_information/user_information.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_window_close/flutter_window_close.dart';
@@ -17,6 +18,11 @@ import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
 import 'package:webview_all/webview_all.dart';
 import 'dart:html' as html;
 import 'components/live_stream.dart';
+
+FirebaseDatabase database = FirebaseDatabase.instance;
+//String uid = FirebaseAuth.instance.currentUser!.uid;
+String uid = 'jrOEpp1egiNlEYCimzEM2fnGOE13';
+DatabaseReference user_presence_status = database.ref('status/${uid}');
 
 const List<TabItem> items = [
   TabItem(
@@ -46,10 +52,55 @@ class _ControllerPageState extends State<ControllerPage> with WidgetsBindingObse
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context){
-      String uid = FirebaseAuth.instance.currentUser!.uid;
-      if()
-    });
+
+    return Scaffold(
+        floatingActionButton: (getUserID() == admin_email)?
+        FloatingActionButton(onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AdminConsole()));
+        }):
+        Gap(0),
+        body: StreamBuilder(
+            stream: user_presence_status.onValue,
+            builder: (context, snapshot){
+              if (snapshot.hasError){
+                return Center(child: Text(snapshot.error.toString()),);
+              }
+              else if(snapshot.hasData){
+                Map<String, dynamic> user_presence_map = Map<String, dynamic>.from(snapshot.data!.snapshot.value as Map);
+                print('queue status of current user is ${user_presence_map['queue']}');
+                if(user_presence_map['queue'] == true){
+                  return OrientationBuilder(builder: (context, orientation){
+                    return orientation == Orientation.landscape
+                        ? const Row(
+                      children: [
+                        LiveStream(),
+                        Gap(64),
+                        ControlSection(),
+                        Gap(64),
+                      ],
+                    )
+                        : const Column(
+                      children: [
+                        LiveStream(),
+                        Gap(64),
+                        ControlSection(),
+                        Gap(64),
+                      ],
+                    );
+
+                  });
+                }
+                else{
+                  return Center(child: Text('Live view'));
+                }
+              }
+              else{
+                return Center(child: Text('No data found on user $uid queue status, contact Thomas for fix'),);
+                }
+            }
+        )
+    );
+
     return Scaffold(
       floatingActionButton: (getUserID() == admin_email)?
       FloatingActionButton(onPressed: (){

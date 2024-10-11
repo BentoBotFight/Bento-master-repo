@@ -11,14 +11,14 @@ class PresenceService {
     final userStatusRef = _database.child('status/$_uid');
 
     // When app is opened
-    userStatusRef.set({
+    userStatusRef.update({
       'email': getUserID(),
       'state': 'online',
       'last_seen': ServerValue.timestamp,
     });
 
     // When app is closed
-    userStatusRef.onDisconnect().set({
+    userStatusRef.onDisconnect().update({
       'email': getUserID(),
       'state': 'offline',
       'last_seen': ServerValue.timestamp,
