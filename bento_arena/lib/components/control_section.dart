@@ -14,8 +14,8 @@ class ControlSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         ActionButton(
-          command: 'python dc.py 1 -1 & python dc.py 2 -1',
-          stop_command: 'python dc.py 1 0 & python dc.py 2 0',
+          command: 'python dc.py 1 -1 & python dc.py 2 -1 & python dc.py 3 1',
+          stop_command: 'python dc.py 1 0 & python dc.py 2 0 & python dc.py 3 0',
           svg: 'assets/svg/up.svg',
             //icon: Icons.arrow_upward_outlined,
             //url: 'https://bento.comfyspace.tech/forward'
@@ -24,7 +24,7 @@ class ControlSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ActionButton(
-    command: 'python3 dc.py 1 -1 & python3 dc.py 2 0',
+    command: 'python3 dc.py 1 -1 & python3 dc.py 2 0 ',
     stop_command: 'python3 dc.py 1 0 & python3 dc.py 2 0',
               svg: 'assets/svg/left.svg',
                 //icon: Icons.arrow_circle_left_outlined,
