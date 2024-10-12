@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import '../theme/color.dart';
 
 FirebaseDatabase database = FirebaseDatabase.instance;
+
+
 DatabaseReference user_presence_status = database.ref('status');
 
 class AdminConsole extends StatefulWidget {
@@ -51,7 +53,6 @@ class _AdminConsoleState extends State<AdminConsole> {
                         else{
                           database.ref('status/$uid').update({'queue': true});
                         }
-
                       },
                       child: Container(
                         color: (user_presence_map[uid]['state'] == 'online')? AppColors.comfyGreen :AppColors.lighterGreen,
