@@ -238,6 +238,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.0"
+  flutter_joystick:
+    dependency: "direct main"
+    description:
+      name: flutter_joystick
+      sha256: "84178c47aee3080599b8b38c44be31a69d50358aaa8213222f7833ea2e1641a2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.1"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -432,6 +440,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.11.1"
+  matrices:
+    dependency: "direct main"
+    description:
+      name: matrices
+      sha256: e1277be104655d46bfe4aeb8917e7c31e2ffc06e9d0461b92fc139391fc931c2
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.7"
   meta:
     dependency: transitive
     description:

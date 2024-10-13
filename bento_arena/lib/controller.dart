@@ -54,11 +54,11 @@ class _ControllerPageState extends State<ControllerPage> with WidgetsBindingObse
   Widget build(BuildContext context) {
 
     return Scaffold(
-        floatingActionButton: (getUserID() == admin_email)?
+        /*floatingActionButton: (getUserID() == admin_email)?
         FloatingActionButton(onPressed: (){
           Navigator.push(context, MaterialPageRoute(builder: (context) => AdminConsole()));
         }):
-        Gap(0),
+        Gap(0),*/
         body: StreamBuilder(
             stream: user_presence_status.onValue,
             builder: (context, snapshot){
@@ -99,35 +99,6 @@ class _ControllerPageState extends State<ControllerPage> with WidgetsBindingObse
                 }
             }
         )
-    );
-
-    return Scaffold(
-      floatingActionButton: (getUserID() == admin_email)?
-      FloatingActionButton(onPressed: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => AdminConsole()));
-      }):
-      Gap(0),
-      backgroundColor: AppColors.lighterGreen,
-      body: OrientationBuilder(builder: (context, orientation){
-        return orientation == Orientation.landscape
-            ? const Row(
-          children: [
-            LiveStream(),
-            Gap(64),
-            ControlSection(),
-            Gap(64),
-          ],
-        )
-            : const Column(
-          children: [
-            LiveStream(),
-            Gap(64),
-            ControlSection(),
-            Gap(64),
-          ],
-        );
-
-      }),
     );
 
   }
