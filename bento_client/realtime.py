@@ -29,7 +29,7 @@ def listen_to_database(firebase_config):
     database_ref = db.reference()
 
     # Specify the path to the data you want to listen to
-    data_ref = database_ref.child('robot')
+    data_ref = database_ref.child('robot/snow-white')
 
     # Set up a listener for changes
     def on_data_change(event):

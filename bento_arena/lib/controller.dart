@@ -73,6 +73,11 @@ class _ControllerPageState extends State<ControllerPage> with WidgetsBindingObse
                     return orientation == Orientation.landscape
                         ? const Row(
                       children: [
+                        Padding(
+                          padding: EdgeInsets.all(50),
+                          child: WeaponControl(),
+                        ),
+                        Gap(64),
                         LiveStream(),
                         Gap(64),
                         ControlSection(),
@@ -83,7 +88,23 @@ class _ControllerPageState extends State<ControllerPage> with WidgetsBindingObse
                       children: [
                         LiveStream(),
                         Gap(64),
-                        ControlSection(),
+                        Row(
+                          //mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 40),
+                              child: WeaponControl(),
+                            ),
+
+                            Padding(
+                              padding: EdgeInsets.only(right: 40),
+                              child: ControlSection(),
+                            ),
+                          ],
+                        ),
+
                         Gap(64),
                       ],
                     );

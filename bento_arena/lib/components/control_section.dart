@@ -27,137 +27,140 @@ class _ControlSectionState extends State<ControlSection> {
   JoystickMode _joystickMode = JoystickMode.all;
   @override
   Widget build(BuildContext context) {
+    return Container(
+      //color: Colors.yellow,
+      child: StreamBuilder(
+          stream: bento_info.onValue,
+          builder: (context, snapshot){
+            String bento_name = snapshot.data!.snapshot.value.toString();
+            DatabaseReference ref = database.ref('robot/$bento_name');
+            print('bento name is $bento_name');
+            return Joystick(
+              mode: _joystickMode,
+              listener: (details) async {
+
+                /*var x_y_matrix = Matrix.fromList([[details.x, details.y]]);
+                var conversion_matrix = Matrix.fromList(
+                  [[0, 1], [-1, 1]]
+                );
+                var result = x_y_matrix * conversion_matrix;
+                var motor1 = result[0][0];
+                var motor2 = result[0][1];
+                await ref.update({
+                  "command": 'python dc.py 1 $motor1 & python dc.py 2 $motor2',
+                });*/
+
+                if(details.x < 0.7 && details.x>-0.7 && details.y < -0.3){
+                  await ref.update({
+                    "command": 'python dc.py 1 -0.5 & python dc.py 2 -0.5',
+                  });
+                  print('up');
+
+                }
+                else if (details.x < 0.7 && details.x>-0.7 && details.y > 0.3){
+                  await ref.update({
+                    "command": 'python dc.py 1 0.5 & python dc.py 2 0.5',
+                  });
+                  print('down');
+                }
+                else if (details.x > 0.3) {
+                  await ref.update({
+                    "command": 'python dc.py 1 -0.2 & python dc.py 2 0',
+                  });
+                  print('right');
+                }
+                else if (details.x < -0.3){
+                  await ref.update({
+                    "command": 'python dc.py 1 0 & python dc.py 2 -0.2',
+                  });
+                  print('left');
+                }
+                else{
+                  await ref.update({
+                    "command": 'python dc.py 1 0 & python dc.py 2 0',
+                  });
+                  print('stop');
+                }
+
+
+              },
+
+            );
+
+      }),
+    );
+
+  }
+}
+
+class WeaponControl extends StatefulWidget {
+  const WeaponControl({super.key});
+
+  @override
+  State<WeaponControl> createState() => _WeaponControlState();
+}
+
+class _WeaponControlState extends State<WeaponControl> {
+  double initial_angle = 90;
+  @override
+  Widget build(BuildContext context) {
     return StreamBuilder(
         stream: bento_info.onValue,
         builder: (context, snapshot){
           String bento_name = snapshot.data!.snapshot.value.toString();
           DatabaseReference ref = database.ref('robot/$bento_name');
           print('bento name is $bento_name');
-          return Joystick(
-            mode: _joystickMode,
-            listener: (details) async {
-
-              /*var x_y_matrix = Matrix.fromList([[details.x, details.y]]);
-              var conversion_matrix = Matrix.fromList(
-                [[0, 1], [-1, 1]]
-              );
-              var result = x_y_matrix * conversion_matrix;
-              var motor1 = result[0][0];
-              var motor2 = result[0][1];
-              await ref.update({
-                "command": 'python dc.py 1 $motor1 & python dc.py 2 $motor2',
-              });*/
-
-
-
-              if(details.x < 0.7 && details.x>-0.7 && details.y < -0.3){
-                await ref.update({
-                  "command": 'python dc.py 1 -0.5 & python dc.py 2 -0.5',
-                });
-                print('up');
-
-              }
-              else if (details.x < 0.7 && details.x>-0.7 && details.y > 0.3){
-                await ref.update({
-                  "command": 'python dc.py 1 0.5 & python dc.py 2 0.5',
-                });
-                print('down');
-              }
-              else if (details.x > 0.3) {
-                await ref.update({
-                  "command": 'python dc.py 1 -0.2 & python dc.py 2 0',
-                });
-                print('right');
-              }
-              else if (details.x < -0.3){
-                await ref.update({
-                  "command": 'python dc.py 1 0 & python dc.py 2 -0.2',
-                });
-                print('left');
-              }
-              else{
-                await ref.update({
-                  "command": 'python dc.py 1 0 & python dc.py 2 0',
-                });
-                print('stop');
-              }
-
-
-            },
-
+          return Container(
+            //color: Colors.red,
+            child: RotatedBox(
+              quarterTurns: 3,
+              child: SliderTheme(
+                data: SliderThemeData(
+                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 20),
+                  //trackShape: CustomTrackShape(),
+                ),
+                child: Slider(
+                  divisions: 1,
+                  min: 90, max: 170,
+                  value: initial_angle,
+                  onChanged: (double value) async {
+                    if((initial_angle == 90)){
+                      await ref.update({
+                        "weapon": 'python servo.py 21 170',
+                      });
+                    }
+                    else{
+                      await ref.update({
+                        "weapon": 'python servo.py 21 90',
+                      });
+                    }
+                    setState((){
+                
+                
+                      initial_angle = value;
+                    });
+                  },
+                ),
+              ),
+            ),
           );
-
-    });
-    /*return Column(
-      mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        ActionButton(
-          command: 'python dc.py 1 -1 & python dc.py 2 -1 & python dc.py 3 1',
-          stop_command: 'python dc.py 1 0 & python dc.py 2 0 & python dc.py 3 0',
-          svg: 'assets/svg/up.svg',
-            //icon: Icons.arrow_upward_outlined,
-            //url: 'https://bento.comfyspace.tech/forward'
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ActionButton(
-    command: 'python3 dc.py 1 0 & python3 dc.py 2 -1 ',
-    stop_command: 'python3 dc.py 1 0 & python3 dc.py 2 0',
-              svg: 'assets/svg/left.svg',
-                //icon: Icons.arrow_circle_left_outlined,
-                //url: 'https://bento.comfyspace.tech/left'
-    ),
-            Gap(90),
-            ActionButton(
-                command: 'python3 dc.py 1 -1 & python3 dc.py 2 0',
-                stop_command: 'python3 dc.py 1 0 & python3 dc.py 2 0',
-                svg: 'assets/svg/right.svg',
-                //icon: Icons.arrow_circle_right_outlined,
-                //url: 'https://bento.comfyspace.tech/right'
-    ),
-          ],
-        ),
-        ActionButton(
-            command: 'python3 dc.py 1 1 & python3 dc.py 2 1',
-            stop_command: 'python3 dc.py 1 0 & python3 dc.py 2 0',
-            svg: 'assets/svg/down.svg',
-            //icon: Icons.arrow_downward,
-            //url: 'https://bento.comfyspace.tech/backward'
-        ),
-      ],
-    );*/
+        });
 
   }
 }
 
-class Ball extends StatelessWidget {
-  final double x;
-  final double y;
-
-  const Ball(this.x, this.y, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      left: x,
-      top: y,
-      child: Container(
-        width: ballSize,
-        height: ballSize,
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.redAccent,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              spreadRadius: 2,
-              blurRadius: 3,
-              offset: Offset(0, 3),
-            )
-          ],
-        ),
-      ),
-    );
+class CustomTrackShape extends RoundedRectSliderTrackShape {
+  Rect getPreferredRect({
+    required RenderBox parentBox,
+    Offset offset = Offset.zero,
+    required SliderThemeData sliderTheme,
+    bool isEnabled = false,
+    bool isDiscrete = false,
+  }) {
+    final double trackHeight = sliderTheme.trackHeight!;
+    final double trackLeft = offset.dx;
+    final double trackTop = offset.dy + (parentBox.size.height - trackHeight) / 2;
+    final double trackWidth = parentBox.size.width;
+    return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
 }

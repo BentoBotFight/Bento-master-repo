@@ -11,7 +11,7 @@ class LiveStream extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(12),
           color: AppColors.comfyGreen,
-          child: Webview(url: "https://viewer.millicast.com?streamId=W3yfVd/myStreamName")),
+          child: Webview(url: "https://viewer.millicast.com?streamId=GG2XAu/myStreamName")),
     );
 
   }
