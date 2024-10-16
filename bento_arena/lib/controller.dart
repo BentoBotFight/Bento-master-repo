@@ -54,11 +54,11 @@ class _ControllerPageState extends State<ControllerPage> with WidgetsBindingObse
   Widget build(BuildContext context) {
 
     return Scaffold(
-        /*floatingActionButton: (getUserID() == admin_email)?
+        floatingActionButton: (getUserID() == admin_email)?
         FloatingActionButton(onPressed: (){
           Navigator.push(context, MaterialPageRoute(builder: (context) => AdminConsole()));
         }):
-        Gap(0),*/
+        Container(width: 0, height:0),
         body: StreamBuilder(
             stream: user_presence_status.onValue,
             builder: (context, snapshot){
