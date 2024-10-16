@@ -8,7 +8,6 @@ import '../theme/color.dart';
 
 FirebaseDatabase database = FirebaseDatabase.instance;
 
-
 DatabaseReference user_presence_status = database.ref('status');
 
 class AdminConsole extends StatefulWidget {
@@ -60,6 +59,23 @@ class _AdminConsoleState extends State<AdminConsole> {
                         child: ListTile(
                           leading: ((user_presence_map[uid]['queue']) == true)? Icon(Icons.play_circle, color: AppColors.comfyGreenText,): Icon(Icons.pause, color: AppColors.lightGrey),
                           title: ((user_presence_map[uid]['email']) != null)? Text(user_presence_map[uid]['email']) : Text(uid),
+                          trailing: DropdownButton<String>(
+                            value: (user_presence_map[uid]['bento'] == null)? 'none' :user_presence_map[uid]['bento'],
+                              items: const [
+                                DropdownMenuItem(child: Text('men-in-black'), value: 'men-in-black',),
+                                DropdownMenuItem(child: Text('snow-white'), value: 'snow-white',),
+                                DropdownMenuItem(child: Text('none'), value: 'none',)
+                              ]
+                              /*robot_list.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList()*/
+                              , onChanged: (new_value){
+                            database.ref('status/$uid').update({'bento': new_value});
+                          }
+                          ),
                         ),
                       ),
                     ),

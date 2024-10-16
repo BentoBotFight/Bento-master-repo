@@ -23,7 +23,7 @@ class _StreamRerouteState extends State<StreamReroute> {
     print('re-routing page based on stream live status');
     bool stream_status = await obtain_stream_status();
     if(stream_status == true){
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(Duration(seconds: 1));
       Navigator.push(context, MaterialPageRoute(builder: (context) => ControllerPage()));
     }
     else{
@@ -33,7 +33,7 @@ class _StreamRerouteState extends State<StreamReroute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text('rerouting in 2 seconds'),),
+      body: Center(child: Text('rerouting in 1 second'),),
     );
 
   }
