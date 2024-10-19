@@ -14,15 +14,19 @@ class PresenceService {
   final DatabaseReference _database = FirebaseDatabase.instance.ref();
   final String _uid = FirebaseAuth.instance.currentUser!.uid;
 
-  void updatePresence() {
+  void updatePresence() async {
     final userStatusRef = _database.child('status/$_uid');
+
+    // First, get the current value of 'bento'
+    DataSnapshot snapshot = await userStatusRef.child('bento').get();
+    String bentoValue = snapshot.value as String? ?? 'none';
 
     // When app is opened
     userStatusRef.update({
       'email': getUserID(),
       'state': 'online',
       'last_seen': ServerValue.timestamp,
-      'bento': getRandomItem(bento_list)
+      'bento': bentoValue  // Use the existing value or 'none' if it was null
     });
 
     // When app is closed

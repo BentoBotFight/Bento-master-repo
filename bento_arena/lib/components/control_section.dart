@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bento_arena/components/button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -8,6 +10,7 @@ import 'package:matrices/matrices.dart';
 
 const ballSize = 20.0;
 const step = 10.0;
+
 FirebaseDatabase database = FirebaseDatabase.instance;
 String uid = FirebaseAuth.instance.currentUser!.uid;
 
@@ -24,9 +27,11 @@ class ControlSection extends StatefulWidget {
 class _ControlSectionState extends State<ControlSection> {
   double _x = 100;
   double _y = 100;
+
   JoystickMode _joystickMode = JoystickMode.all;
   @override
   Widget build(BuildContext context) {
+
     return Container(
       //color: Colors.yellow,
       child: StreamBuilder(
@@ -35,31 +40,21 @@ class _ControlSectionState extends State<ControlSection> {
             String bento_name = snapshot.data!.snapshot.value.toString();
             DatabaseReference ref = database.ref('robot/$bento_name');
             print('bento name is $bento_name');
+
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
               Joystick(
               mode: _joystickMode,
-              listener: (details) async {
 
-                /*var x_y_matrix = Matrix.fromList([[details.x, details.y]]);
-                var conversion_matrix = Matrix.fromList(
-                  [[0, 1], [-1, 1]]
-                );
-                var result = x_y_matrix * conversion_matrix;
-                var motor1 = result[0][0];
-                var motor2 = result[0][1];
-                await ref.update({
-                  "command": 'python dc.py 1 $motor1 & python dc.py 2 $motor2',
-                });*/
+              listener: (details) async {
 
                 if(details.x < 0.7 && details.x>-0.7 && details.y < -0.3){
                   await ref.update({
                     "command": 'python dc.py 1 -0.5 & python dc.py 2 -0.5',
                   });
                   print('up');
-
                 }
                 else if (details.x < 0.7 && details.x>-0.7 && details.y > 0.3){
                   await ref.update({
@@ -85,10 +80,13 @@ class _ControlSectionState extends State<ControlSection> {
                   });
                   print('stop');
                 }
+                //_circleDetector.update(details);
 
 
               },
-                          ),
+
+
+              ),
               ],
             );
 
@@ -140,8 +138,6 @@ class _WeaponControlState extends State<WeaponControl> {
                       });
                     }
                     setState((){
-                
-                
                       initial_angle = value;
                     });
                   },
@@ -150,22 +146,5 @@ class _WeaponControlState extends State<WeaponControl> {
             ),
           );
         });
-
-  }
-}
-
-class CustomTrackShape extends RoundedRectSliderTrackShape {
-  Rect getPreferredRect({
-    required RenderBox parentBox,
-    Offset offset = Offset.zero,
-    required SliderThemeData sliderTheme,
-    bool isEnabled = false,
-    bool isDiscrete = false,
-  }) {
-    final double trackHeight = sliderTheme.trackHeight!;
-    final double trackLeft = offset.dx;
-    final double trackTop = offset.dy + (parentBox.size.height - trackHeight) / 2;
-    final double trackWidth = parentBox.size.width;
-    return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
 }

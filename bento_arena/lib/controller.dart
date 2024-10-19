@@ -1,6 +1,7 @@
 import 'package:bento_arena/admin/admin_console.dart';
 import 'package:bento_arena/components/button.dart';
 import 'package:bento_arena/components/control_section.dart';
+import 'package:bento_arena/components/keyboard_control.dart';
 import 'package:bento_arena/presence/presence.dart';
 import 'package:bento_arena/secrets/variables.dart';
 import 'package:bento_arena/theme/color.dart';
@@ -11,6 +12,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_window_close/flutter_window_close.dart';
 import 'package:http/http.dart' as http;
 import 'package:gap/gap.dart';
@@ -23,6 +25,21 @@ FirebaseDatabase database = FirebaseDatabase.instance;
 //String uid = FirebaseAuth.instance.currentUser!.uid;
 String uid = 'jrOEpp1egiNlEYCimzEM2fnGOE13';
 DatabaseReference user_presence_status = database.ref('status/${uid}');
+
+final Map<String, String> key_command = {
+  'w': 'python dc.py 1 -0.5 & python dc.py 2 -0.5',
+  'd': 'python dc.py 1 -0.2 & python dc.py 2 0',
+  'a': 'python dc.py 1 0 & python dc.py 2 -0.2',
+  's': 'python dc.py 1 0.5 & python dc.py 2 0.5',
+  'arrow up': 'python dc.py 1 -0.5 & python dc.py 2 -0.5',
+  'arrow right': 'python dc.py 1 -0.2 & python dc.py 2 0',
+  'arrow left': 'python dc.py 1 0 & python dc.py 2 -0.2',
+  'arrow down': 'python dc.py 1 0.5 & python dc.py 2 0.5',
+  'shift right': 'python servo.py 21 90',
+  'shift left': 'python servo.py 21 90',
+  'enter': 'python servo.py 21 170',
+  'backspace': 'python dc.py 1 1 & python dc.py 2 -1',
+};
 
 const List<TabItem> items = [
   TabItem(
@@ -71,43 +88,51 @@ class _ControllerPageState extends State<ControllerPage> with WidgetsBindingObse
                 if(user_presence_map['queue'] == true){
                   return OrientationBuilder(builder: (context, orientation){
                     return orientation == Orientation.landscape
-                        ? const Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(50),
-                          child: WeaponControl(),
-                        ),
-                        Gap(64),
-                        LiveStream(),
-                        Gap(64),
-                        ControlSection(),
-                        Gap(64),
-                      ],
-                    )
-                        : const Column(
-                      children: [
-                        LiveStream(),
-                        Gap(64),
-                        Row(
-                          //mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 40),
-                              child: WeaponControl(),
-                            ),
+                        ? KeyboardControl(
 
-                            Padding(
-                              padding: EdgeInsets.only(right: 40),
-                              child: ControlSection(),
-                            ),
-                          ],
-                        ),
+                          key_command: key_command,
+                          child: Row(
+                                                children: [
+                          Padding(
+                            padding: EdgeInsets.all(50),
+                            child: WeaponControl(),
+                          ),
+                          Gap(64),
+                          LiveStream(),
+                          Gap(64),
+                          ControlSection(),
+                          Gap(64),
 
-                        Gap(64),
-                      ],
-                    );
+                                                ],
+                                              ),
+                        )
+                        : KeyboardControl(
+                      key_command: key_command,
+                          child: const Column(
+                            children: [
+                          LiveStream(),
+                          Gap(64),
+                          Row(
+                            //mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 40),
+                                child: WeaponControl(),
+                              ),
+
+                              Padding(
+                                padding: EdgeInsets.only(right: 40),
+                                child: ControlSection(),
+                              ),
+                            ],
+                          ),
+                          Gap(64),
+
+                                                ],
+                                              ),
+                        );
 
                   });
                 }
@@ -120,7 +145,7 @@ class _ControllerPageState extends State<ControllerPage> with WidgetsBindingObse
                 }
             }
         ),
-      bottomNavigationBar: Container(
+      /*bottomNavigationBar: Container(
         height: 50,
         color: Colors.red,
         child: Row(
@@ -133,7 +158,7 @@ class _ControllerPageState extends State<ControllerPage> with WidgetsBindingObse
             )
           ],
         ),
-      )
+      )*/
     );
 
   }
