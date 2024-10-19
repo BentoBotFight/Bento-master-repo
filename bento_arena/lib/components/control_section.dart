@@ -35,7 +35,11 @@ class _ControlSectionState extends State<ControlSection> {
             String bento_name = snapshot.data!.snapshot.value.toString();
             DatabaseReference ref = database.ref('robot/$bento_name');
             print('bento name is $bento_name');
-            return Joystick(
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+              Joystick(
               mode: _joystickMode,
               listener: (details) async {
 
@@ -84,7 +88,8 @@ class _ControlSectionState extends State<ControlSection> {
 
 
               },
-
+                          ),
+              ],
             );
 
       }),

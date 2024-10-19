@@ -119,7 +119,21 @@ class _ControllerPageState extends State<ControllerPage> with WidgetsBindingObse
                 return Center(child: Text('No data found on user $uid queue status, contact Thomas for fix'),);
                 }
             }
-        )
+        ),
+      bottomNavigationBar: Container(
+        height: 50,
+        color: Colors.red,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            ActionButton(
+                command: 'python dc.py 1 1 & python dc.py 2 -1',
+                stop_command: 'python dc.py 1 0 & python dc.py 2 0',
+                svg: 'assets/svg/spin.svg'
+            )
+          ],
+        ),
+      )
     );
 
   }

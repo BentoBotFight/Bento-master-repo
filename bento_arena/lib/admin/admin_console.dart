@@ -27,67 +27,84 @@ class _AdminConsoleState extends State<AdminConsole> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder(
-          stream: user_presence_status.onValue,
-          builder: (context, snapshot){
-            if(snapshot.hasError){
-              return Center(child: Text('error displaying live user ${snapshot.error}'),);
-            }
-            else if(snapshot.hasData){
-              Map<String, dynamic> user_presence_map = Map<String, dynamic>.from(snapshot.data!.snapshot.value as Map);
-              List<String> user_uid = user_presence_map.keys.toList();
+      body: Container(
 
-              return ListView.builder(
-                itemCount: user_presence_map.length,
-                  padding: EdgeInsets.all(20),
-                  itemBuilder: (context, index){
-                  String uid = user_uid[index];
-                  return Padding(
-                    padding: EdgeInsets.all(8),
-                    child: GestureDetector(
-                      onTap: (){
-                        if((user_presence_map[uid]['queue']) ==true){
-                          database.ref('status/$uid').update({'queue': false});
-                        }
-                        else{
-                          database.ref('status/$uid').update({'queue': true});
-                        }
-                      },
-                      child: Container(
-                        color: (user_presence_map[uid]['state'] == 'online')? AppColors.comfyGreen :AppColors.lighterGreen,
-                        padding: const EdgeInsets.all(12),
-                        child: ListTile(
-                          leading: ((user_presence_map[uid]['queue']) == true)? Icon(Icons.play_circle, color: AppColors.comfyGreenText,): Icon(Icons.pause, color: AppColors.lightGrey),
-                          title: ((user_presence_map[uid]['email']) != null)? Text(user_presence_map[uid]['email']) : Text(uid),
-                          trailing: DropdownButton<String>(
-                            value: (user_presence_map[uid]['bento'] == null)? 'none' :user_presence_map[uid]['bento'],
-                              items: const [
-                                DropdownMenuItem(child: Text('men-in-black'), value: 'men-in-black',),
-                                DropdownMenuItem(child: Text('snow-white'), value: 'snow-white',),
-                                DropdownMenuItem(child: Text('none'), value: 'none',)
-                              ]
-                              /*robot_list.map((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
+        child: StreamBuilder(
+            stream: user_presence_status.onValue,
+            builder: (context, snapshot){
+              if(snapshot.hasError){
+                return Center(child: Text('error displaying live user ${snapshot.error}'),);
+              }
+              else if(snapshot.hasData){
+                Map<String, dynamic> user_presence_map = Map<String, dynamic>.from(snapshot.data!.snapshot.value as Map);
+                List<String> user_uid = user_presence_map.keys.toList();
+      
+                return ListView.builder(
+                  itemCount: user_presence_map.length,
+                    padding: EdgeInsets.all(20),
+                    itemBuilder: (context, index){
+                    String uid = user_uid[index];
+      
+                    return Padding(
+                      padding: EdgeInsets.all(8),
+                      child: GestureDetector(
+                        onTap: (){
+                          showDialog(context: context, builder: (context){
+                            return FutureBuilder(future: get_user_name(user_presence_map[uid]['email']), builder: (context, snapshot){
+                              if(snapshot.hasData == true && snapshot.connectionState == ConnectionState.done){
+                                return AlertDialog(
+                                  title: Text(snapshot.data!),
                                 );
-                              }).toList()*/
-                              , onChanged: (new_value){
-                            database.ref('status/$uid').update({'bento': new_value});
-                          }
+                              }
+                              else if(snapshot.hasData == false){
+                                return AlertDialog(
+                                  title: Text('No data bro'),
+                                );
+                              }
+                              else{
+                                return AlertDialog(
+                                  title: Text('not loaded yet'),
+                                );
+                              }
+                            });
+                          });
+                        },
+                        child: Container(
+                          color: (user_presence_map[uid]['state'] == 'online')? AppColors.comfyGreen :AppColors.lighterGreen,
+                          padding: const EdgeInsets.all(12),
+                          child: ListTile(
+                            leading: ((user_presence_map[uid]['queue']) == true)? Icon(Icons.play_circle, color: AppColors.comfyGreenText,): Icon(Icons.pause, color: AppColors.lightGrey),
+                            title: ((user_presence_map[uid]['email']) != null)? Text(user_presence_map[uid]['email']) : Text(uid),
+                            trailing: DropdownButton<String>(
+                                value: (user_presence_map[uid]['bento'] == null)? 'none' :user_presence_map[uid]['bento'],
+                                items: const [
+                                  DropdownMenuItem(child: Text('men-in-black'), value: 'men-in-black',),
+                                  DropdownMenuItem(child: Text('snow-white'), value: 'snow-white',),
+                                  DropdownMenuItem(child: Text('none'), value: 'none',)
+                                ]
+                                /*robot_list.map((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList()*/
+                                , onChanged: (new_value){
+                              database.ref('status/$uid').update({'bento': new_value});
+                            }
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                  }
-              );
-              return Center(child: Text('data exists'));
+                    );
+                    }
+                );
+                return Center(child: Text('data exists'));
+              }
+              else{
+                return Center(child: Text('there is no data'),);
+              }
             }
-            else{
-              return Center(child: Text('there is no data'),);
-            }
-          }
+        ),
       ),
     );
   }

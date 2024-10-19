@@ -75,7 +75,7 @@ class _ActionButtonState extends State<ActionButton> {
           },
 
           child: Container(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: _isPressed ? Colors.red : AppColors.comfyGreenText,
                 borderRadius: BorderRadius.circular(20), // Adds rounded corners
@@ -106,3 +106,5 @@ class _ActionButtonState extends State<ActionButton> {
     });
   }
 }
+
+
