@@ -6,52 +6,30 @@ import 'package:webview_all/webview_all.dart';
 
 String? uid = FirebaseAuth.instance.currentUser?.uid;
 FirebaseDatabase database = FirebaseDatabase.instance;
-DatabaseReference play_or_watch = database.ref('status/$uid');
-//DatabaseReference play_url = database.ref('play');
-//DatabaseReference watch_url = database.ref('stream');
-
+DatabaseReference bento_info = database.ref('status/$uid/bento');
 class LiveStream extends StatelessWidget {
   const LiveStream({super.key});
 
   @override
   Widget build(BuildContext context) {
-/*    return StreamBuilder(
-        stream: play_or_watch.onValue,
+    return StreamBuilder(
+        stream: bento_info.onValue,
         builder: (context, snapshot){
-          if(snapshot.connectionState == ConnectionState.done){
-            Map<String, dynamic> player_info = Map<String, dynamic>.from(snapshot.data!.snapshot.value as Map);
-            if(player_info['bento'] != 'none'){
-              return Expanded(
-                child: Container(
-                    padding: EdgeInsets.all(12),
-                    color: AppColors.comfyGreen,
-                    child: Webview(url: 'https://www.youtube.com/live/Arlj4J9jA9U?si=iEvsfqpn8nN0t9GI')),
-              );
-            }
-            else{
-              return Expanded(
-                child: Container(
-                    padding: EdgeInsets.all(12),
-                    color: AppColors.comfyGreen,
-                    child: Webview(url: 'https://viewer.millicast.com?streamId=GG2XAu/myStreamName')),
-              );
-            }
-
-          }
-          else{
-            return Container(
-              width: 50, height: 50,
-              child: Text('Error ${snapshot.error}'),
+          String bento_name = snapshot.data!.snapshot.value.toString();
+          print(' bento name is $bento_name');
+            return Expanded(
+              child: Container(
+                  padding: EdgeInsets.all(12),
+                  color: AppColors.comfyGreen,
+                  child: Stack(children: [
+                    Webview(url: "https://viewer.millicast.com?streamId=GG2XAu/myStreamName"),
+                    Container(color: AppColors.comfyGreen, padding: EdgeInsets.all(8) ,child: Text('controlling $bento_name')),
+                  ])),
             );
-          }
+
         }
-    );*/
-return Expanded(
-      child: Container(
-        padding: EdgeInsets.all(12),
-          color: AppColors.comfyGreen,
-          child: Webview(url: "https://viewer.millicast.com?streamId=GG2XAu/myStreamName")),
     );
+
 
   }
 }

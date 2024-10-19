@@ -39,7 +39,6 @@ class _KeyboardControlState extends State<KeyboardControl> {
         builder: (context, snapshot) {
           String bento_name = snapshot.data?.snapshot.value?.toString() ?? '';
           DatabaseReference ref = database.ref('robot/$bento_name');
-
           return FocusScope(
             autofocus: true,
             child: RawKeyboardListener(
@@ -58,7 +57,7 @@ class _KeyboardControlState extends State<KeyboardControl> {
                 } else if (event is RawKeyUpEvent) {
                   await ref.update({
                     "command": 'python dc.py 1 0 & python dc.py 2 0',
-                    "weapon": 'python servo.py 21 90',
+
                   });
                 }
               },
