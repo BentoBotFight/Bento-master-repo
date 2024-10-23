@@ -22,7 +22,7 @@ class LiveStream extends StatelessWidget {
                   padding: EdgeInsets.all(12),
                   color: AppColors.comfyGreen,
                   child: Stack(children: [
-                    Webview(url: "https://viewer.millicast.com?streamId=GG2XAu/myStreamName"),
+                    Webview(url: "https://viewer.millicast.com?streamId=4zxunL/myStreamName"),
                     Container(color: AppColors.comfyGreen, padding: EdgeInsets.all(8) ,child: Text('controlling $bento_name')),
                   ])),
             );
