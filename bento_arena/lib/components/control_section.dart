@@ -16,6 +16,43 @@ String uid = FirebaseAuth.instance.currentUser!.uid;
 
 DatabaseReference bento_info = database.ref('status/$uid/bento');
 
+Map<String, Map<String, String>> bento_control = {
+  'men-in-black': {
+    'up': 'python dc.py 1 -0.5 & python dc.py 2 -0.5',
+    'down': 'python dc.py 1 0.5 & python dc.py 2 0.5',
+    'right':  'python dc.py 1 -0.2 & python dc.py 2 0',
+    'left': 'python dc.py 1 0 & python dc.py 2 -0.2',
+    'stop': 'python dc.py 1 0 & python dc.py 2 0'
+  },
+  'snow-white': {
+    'up': 'python dc.py 1 -0.5 & python dc.py 2 -0.5',
+    'down': 'python dc.py 1 0.5 & python dc.py 2 0.5',
+    'right':  'python dc.py 1 -0.2 & python dc.py 2 0',
+    'left': 'python dc.py 1 0 & python dc.py 2 -0.2',
+    'stop': 'python dc.py 1 0 & python dc.py 2 0'
+  },
+  'cyclop': {
+    'up': 'raspi-gpio set 5 dh & raspi-gpio set 6 dl & raspi-gpio set 22 dh & raspi-gpio set 27 dl',
+    'down': 'raspi-gpio set 5 dl & raspi-gpio set 6 dh & raspi-gpio set 22 dl & raspi-gpio set 27 dh',
+    'left':  'raspi-gpio set 5 dl & raspi-gpio set 6 dl & raspi-gpio set 22 dh & raspi-gpio set 27 dl',
+    'right': 'raspi-gpio set 5 dh & raspi-gpio set 6 dl & raspi-gpio set 22 dl & raspi-gpio set 27 dl',
+    'stop': 'raspi-gpio set 5 dl & raspi-gpio set 6 dl & raspi-gpio set 22 dl & raspi-gpio set 27 dl'
+  }
+};
+Map<String, Map<String, String>> bento_weapon_control = {
+  'men-in-black': {
+    'up': 'python servo.py 21 170',
+    'down': 'python servo.py 21 90',
+  },
+  'snow-white': {
+    'up': 'python servo.py 21 170',
+    'down': 'python servo.py 21 90',
+  },
+  'cyclop': {
+    'up': 'raspi-gpio set 20 dh',
+    'down': 'raspi-gpio set 20 dl',
+  }
+};
 
 class ControlSection extends StatefulWidget {
   const ControlSection({super.key});
@@ -51,41 +88,40 @@ class _ControlSectionState extends State<ControlSection> {
               listener: (details) async {
 
                 if(details.x < 0.7 && details.x>-0.7 && details.y < -0.3){
+
                   await ref.update({
-                    "command": 'python dc.py 1 -0.5 & python dc.py 2 -0.5',
+                    "command": bento_control[bento_name]?['up'],
+                    //'python dc.py 1 -0.5 & python dc.py 2 -0.5',
                   });
                   print('up');
+                  print(bento_control[bento_name]?['up']);
                 }
                 else if (details.x < 0.7 && details.x>-0.7 && details.y > 0.3){
                   await ref.update({
-                    "command": 'python dc.py 1 0.5 & python dc.py 2 0.5',
+                    "command": bento_control[bento_name]?['down'],
                   });
                   print('down');
                 }
                 else if (details.x > 0.3) {
                   await ref.update({
-                    "command": 'python dc.py 1 -0.2 & python dc.py 2 0',
+                    "command": bento_control[bento_name]?['right'],
                   });
                   print('right');
                 }
                 else if (details.x < -0.3){
                   await ref.update({
-                    "command": 'python dc.py 1 0 & python dc.py 2 -0.2',
+                    "command": bento_control[bento_name]?['left'],
                   });
                   print('left');
                 }
                 else{
                   await ref.update({
-                    "command": 'python dc.py 1 0 & python dc.py 2 0',
+                    "command": bento_control[bento_name]?['stop'],
                   });
                   print('stop');
                 }
                 //_circleDetector.update(details);
-
-
               },
-
-
               ),
               ],
             );
@@ -129,12 +165,14 @@ class _WeaponControlState extends State<WeaponControl> {
                   onChanged: (double value) async {
                     if((initial_angle == 90)){
                       await ref.update({
-                        "weapon": 'python servo.py 21 170',
+                        "weapon": bento_weapon_control[bento_name]?['up'],
                       });
+                      print(bento_name);
+                      print(bento_weapon_control[bento_name]?['up']);
                     }
                     else{
                       await ref.update({
-                        "weapon": 'python servo.py 21 90',
+                        "weapon": bento_weapon_control[bento_name]?['down'],
                       });
                     }
                     setState((){

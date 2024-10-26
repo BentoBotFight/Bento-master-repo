@@ -80,6 +80,7 @@ class _AdminConsoleState extends State<AdminConsole> {
                                 items: const [
                                   DropdownMenuItem(child: Text('men-in-black'), value: 'men-in-black',),
                                   DropdownMenuItem(child: Text('snow-white'), value: 'snow-white',),
+                                  DropdownMenuItem(child: Text('cyclop'), value: 'cyclop',),
                                   DropdownMenuItem(child: Text('none'), value: 'none',)
                                 ]
                                 /*robot_list.map((String value) {
