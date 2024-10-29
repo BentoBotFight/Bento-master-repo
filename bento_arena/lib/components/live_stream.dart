@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:webview_all/webview_all.dart';
 
 String? uid = FirebaseAuth.instance.currentUser?.uid;
+String? email = FirebaseAuth.instance.currentUser?.email;
 FirebaseDatabase database = FirebaseDatabase.instance;
 DatabaseReference bento_info = database.ref('status/$uid/bento');
 class LiveStream extends StatelessWidget {
@@ -22,7 +23,9 @@ class LiveStream extends StatelessWidget {
                   padding: EdgeInsets.all(12),
                   color: AppColors.comfyGreen,
                   child: Stack(children: [
-                    Webview(url: "https://viewer.millicast.com?streamId=4zxunL/myStreamName"),
+                    Webview(url: 'https://stream.bentobot.tech/viewer?id=bento&name=$email'
+                    //"https://viewer.millicast.com?streamId=4zxunL/myStreamName"
+                  ),
                     Container(color: AppColors.comfyGreen, padding: EdgeInsets.all(8) ,child: Text('controlling $bento_name')),
                   ])),
             );
