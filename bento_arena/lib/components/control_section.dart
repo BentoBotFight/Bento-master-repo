@@ -18,35 +18,38 @@ DatabaseReference bento_info = database.ref('status/$uid/bento');
 
 Map<String, Map<String, String>> bento_control = {
   'men-in-black': {
-    'up': 'python dc.py 1 -0.5 & python dc.py 2 -0.5',
-    'down': 'python dc.py 1 0.5 & python dc.py 2 0.5',
-    'right':  'python dc.py 1 -0.2 & python dc.py 2 0',
-    'left': 'python dc.py 1 0 & python dc.py 2 -0.2',
-    'stop': 'python dc.py 1 0 & python dc.py 2 0'
+    'up': 'raspi-gpio set 21 dh & raspi-gpio set 20 dl & raspi-gpio set 23 dh & raspi-gpio set 24 dl',
+    'down': 'raspi-gpio set 21 dl & raspi-gpio set 20 dh & raspi-gpio set 23 dl & raspi-gpio set 24 dh',
+    'right':  'raspi-gpio set 21 dl & raspi-gpio set 20 dl & raspi-gpio set 23 dh & raspi-gpio set 24 dl',
+    'left': 'raspi-gpio set 21 dh & raspi-gpio set 20 dl & raspi-gpio set 23 dl & raspi-gpio set 24 dl',
+    'stop': 'raspi-gpio set 21 dl & raspi-gpio set 20 dl & raspi-gpio set 23 dl & raspi-gpio set 24 dl',
+    'spin': 'raspi-gpio set 21 dl & raspi-gpio set 20 dh & raspi-gpio set 23 dh & raspi-gpio set 24 dl',
   },
   'snow-white': {
-    'up': 'python dc.py 1 -0.5 & python dc.py 2 -0.5',
-    'down': 'python dc.py 1 0.5 & python dc.py 2 0.5',
-    'right':  'python dc.py 1 -0.2 & python dc.py 2 0',
-    'left': 'python dc.py 1 0 & python dc.py 2 -0.2',
-    'stop': 'python dc.py 1 0 & python dc.py 2 0'
+    'up': 'raspi-gpio set 21 dh & raspi-gpio set 20 dl & raspi-gpio set 23 dh & raspi-gpio set 24 dl',
+    'down': 'raspi-gpio set 21 dl & raspi-gpio set 20 dh & raspi-gpio set 23 dl & raspi-gpio set 24 dh',
+    'right':  'raspi-gpio set 21 dl & raspi-gpio set 20 dl & raspi-gpio set 23 dh & raspi-gpio set 24 dl',
+    'left': 'raspi-gpio set 21 dh & raspi-gpio set 20 dl & raspi-gpio set 23 dl & raspi-gpio set 24 dl',
+    'stop': 'raspi-gpio set 21 dl & raspi-gpio set 20 dl & raspi-gpio set 23 dl & raspi-gpio set 24 dl',
+    'spin': 'raspi-gpio set 21 dl & raspi-gpio set 20 dh & raspi-gpio set 23 dh & raspi-gpio set 24 dl',
   },
   'cyclop': {
     'up': 'raspi-gpio set 5 dh & raspi-gpio set 6 dl & raspi-gpio set 22 dh & raspi-gpio set 27 dl',
     'down': 'raspi-gpio set 5 dl & raspi-gpio set 6 dh & raspi-gpio set 22 dl & raspi-gpio set 27 dh',
     'left':  'raspi-gpio set 5 dl & raspi-gpio set 6 dl & raspi-gpio set 22 dh & raspi-gpio set 27 dl',
     'right': 'raspi-gpio set 5 dh & raspi-gpio set 6 dl & raspi-gpio set 22 dl & raspi-gpio set 27 dl',
-    'stop': 'raspi-gpio set 5 dl & raspi-gpio set 6 dl & raspi-gpio set 22 dl & raspi-gpio set 27 dl'
+    'stop': 'raspi-gpio set 5 dl & raspi-gpio set 6 dl & raspi-gpio set 22 dl & raspi-gpio set 27 dl',
+    'spin': 'raspi-gpio set 5 dh & raspi-gpio set 6 dl & raspi-gpio set 22 dl & raspi-gpio set 27 dh',
   }
 };
 Map<String, Map<String, String>> bento_weapon_control = {
   'men-in-black': {
-    'up': 'python servo.py 21 170',
-    'down': 'python servo.py 21 90',
+    'up': 'python servo.py 16 170',
+    'down': 'python servo.py 16 90',
   },
   'snow-white': {
-    'up': 'python servo.py 21 170',
-    'down': 'python servo.py 21 90',
+    'up': 'python servo.py 16 170',
+    'down': 'python servo.py 16 90',
   },
   'cyclop': {
     'up': 'raspi-gpio set 20 dh',
