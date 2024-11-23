@@ -94,7 +94,7 @@ class _ControllerPageState extends State<ControllerPage> with WidgetsBindingObse
                           child: Row(
                                                 children: [
                           Padding(
-                            padding: EdgeInsets.all(50),
+                            padding: EdgeInsets.only(left: 20),
                             child: WeaponControl(),
                           ),
                           Gap(64),
@@ -118,12 +118,12 @@ class _ControllerPageState extends State<ControllerPage> with WidgetsBindingObse
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(left: 40),
+                                padding: EdgeInsets.only(left: 20),
                                 child: WeaponControl(),
                               ),
 
                               Padding(
-                                padding: EdgeInsets.only(right: 40),
+                                padding: EdgeInsets.only(right: 20),
                                 child: ControlSection(),
                               ),
                             ],

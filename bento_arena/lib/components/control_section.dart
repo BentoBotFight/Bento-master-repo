@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:bento_arena/components/button.dart';
+import 'package:bento_arena/theme/color.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -153,8 +154,33 @@ class _WeaponControlState extends State<WeaponControl> {
           DatabaseReference ref = database.ref('robot/$bento_name');
           print('bento name is $bento_name');
           return Container(
-            //color: Colors.red,
-            child: RotatedBox(
+            //color: AppColors.comfyGreenText,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  iconSize: 60,
+                  focusColor: AppColors.comfyGreen,
+                  highlightColor: Colors.red,
+                  color: AppColors.comfyGreen,
+                    onPressed: () async {
+                  await ref.update({
+                    "weapon": bento_weapon_control[bento_name]?['up'],
+                  });
+                }, icon: Icon(Icons.arrow_upward, size: 50, color: AppColors.comfyGreenText,)),
+                IconButton(
+                  iconSize: 60,
+                    focusColor: AppColors.comfyGreen,
+                    highlightColor: Colors.red,
+                    color: AppColors.comfyGreen,
+                    onPressed: () async {
+                  await ref.update({
+                    "weapon": bento_weapon_control[bento_name]?['down'],
+                  });
+                }, icon: Icon(Icons.arrow_downward, size: 50, color: AppColors.comfyGreenText,)),
+              ],
+            )
+            /*RotatedBox(
               quarterTurns: 3,
               child: SliderTheme(
                 data: SliderThemeData(
@@ -184,7 +210,7 @@ class _WeaponControlState extends State<WeaponControl> {
                   },
                 ),
               ),
-            ),
+            ),*/
           );
         });
   }
